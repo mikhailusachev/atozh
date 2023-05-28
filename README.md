@@ -13,5 +13,7 @@ shadow-cljs - nREPL server started on port 9001
 [:app] Compiling ...
 [:app] Build completed. (224 files, 0 compiled, 0 warnings, 1.93s)
 
+docker run --rm -p 7070:8080 -e XTDB_ENABLE_BYTEUTILS_SHA1=true mikhailusachev/atozh .
+
 👉 App server available at http://0.0.0.0:8080
 ```

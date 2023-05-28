@@ -1,0 +1,36 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install clojure
+      uses: DeLaGuardo/setup-clojure@11.0
+      with:
+        cli: 'latest'              # Clojure CLI based on tools.deps
+
+    - uses: actions/checkout@v3
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+
+    - name: Build the version
+      run: HYPERFIDDLE_ELECTRIC_APP_VERSION=`git describe --tags --long --always --dirty`
+
+    - name: Build the Docker image
+      run: docker build --progress=plain --build-arg VERSION="$HYPERFIDDLE_ELECTRIC_APP_VERSION" -t mikeg42/atozh .
+
+    - name: Docker Push
+      run: docker push mikeg42/atozh

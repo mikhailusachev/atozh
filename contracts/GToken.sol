@@ -15,12 +15,12 @@ interface IMintableERC721 {
 
 
 /**
- * @title Token of a Meme. Single ERC721 instance represents all memes/cards
+ * @title Token of a GCoin. Single ERC721 instance represents all badges
  */
 contract GToken is ERC721URIStorage, ERC721Enumerable, IMintableERC721, DSAuth {
 
   constructor ()
-  ERC721("GToken", "MEME")
+  ERC721("GToken", "GCOIN")
   {
   }
 
